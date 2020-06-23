@@ -1,6 +1,6 @@
 # Arxiv Scraper
 
-This is a small program which will grab all the papers posted on the arxiv each day, convert them to pure text, and, in each of them, search for the regular expressions listed in the configuration file. 
+This is a small program which will grab all the papers posted in the last day, convert them to pure text, and, in each of them, search for the regular expressions listed in the configuration file. 
 
 ## Installation
 
