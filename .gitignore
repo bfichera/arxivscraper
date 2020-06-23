@@ -3,9 +3,5 @@ venv/
 *.pyc
 __pycache__/
 
-dist/
-build/
-*.egg_info/
-
 .ycm_extra_conf.py
 config.json
