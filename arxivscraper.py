@@ -67,9 +67,29 @@ def in_pdf(url, list_of_regex, flags=0):
         if result is not None:
             answers[regex] = True
     return answers
+
+
+def sanitize_chem_term(chem_term):
+    legal = r'(\s|\$|_|\{|\})*'
+    chem_list = chem_term.split(' ')
+    for i,element in enumerate(chem_list):
+        head = element.rstrip('123456789')
+        tail = element[len(head):]
+        if tail != '':
+            head = head + legal
+            tail = tail + legal
+        chem_list[i] = head+tail
+    return r'\s*'.join(chem_list)
             
 
 def main(cfg):
+
+    ##
+    ## Make terms list
+    ##
+    terms = cfg['terms']
+    for chem_term in cfg['chem_terms']:
+        terms.append(sanitize_chem_term(chem_term))
 
     query_terms = [
         'cat:'+cfg['section'],
@@ -102,7 +122,7 @@ def main(cfg):
             logging.info(f'Checking {paper.id}...')
             for regex, is_in in in_pdf(
                 paper.pdf_url,
-                cfg['terms'],
+                terms,
                 flags=flags,
             ).items():
                 if is_in:
