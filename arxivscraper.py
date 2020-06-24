@@ -139,6 +139,8 @@ def main(cfg):
 
 def get_cfg():
 
+    from runpy import run_path
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--config-file',
@@ -148,9 +150,7 @@ def get_cfg():
     )
     args = parser.parse_args()
 
-    with open(args.config_file, 'r') as fh:
-        cfg = json.load(fh)
-
+    cfg = run_path(args.config_file)['cfg']
     return cfg
 
 
