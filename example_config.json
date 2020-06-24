@@ -7,6 +7,9 @@
  "terms": [
   "my_search_terms"
  ],
+ "flags": [
+  "IGNORECASE"
+ ],
  "section": "cond-mat.*",
  "max_results": 500
 }

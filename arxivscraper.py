@@ -58,11 +58,11 @@ def get_pdf_text(url):
     return str(text)
 
 
-def in_pdf(url, list_of_regex):
+def in_pdf(url, list_of_regex, flags=0):
     text = get_pdf_text(url)
     answers = {regex:False for regex in list_of_regex}
     for regex in list_of_regex:
-        prog = re.compile(regex)
+        prog = re.compile(regex, flags)
         result = prog.search(text)
         if result is not None:
             answers[regex] = True
@@ -88,11 +88,22 @@ def main(cfg):
     )
 
     matches = {}
+    flagsdict = {
+        'IGNORECASE': re.IGNORECASE,
+        'MULTILINE': re.MULTILINE,
+        'DOTALL': re.DOTALL,
+        'UNICODE': re.UNICODE,
+        'LOCALE': re.LOCALE,
+        'VERBOSE': re.VERBOSE,
+    }
+    flags = [flagsdict[flag.upper()] for flag in cfg['flags']]
     for paper in today_results:
         try:
             logging.info(f'Checking {paper.id}...')
             for regex, is_in in in_pdf(
-                paper.pdf_url, cfg['terms']
+                paper.pdf_url,
+                cfg['terms'],
+                flags=flags,
             ).items():
                 if is_in:
                     if regex not in matches.keys():
