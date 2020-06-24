@@ -7,6 +7,9 @@
  "terms": [
   "my_search_terms"
  ],
+ "chem_terms": [
+  "W Se2"
+ ],
  "flags": [
   "IGNORECASE"
  ],

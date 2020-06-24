@@ -26,4 +26,4 @@ $ python arxivscraper.py --config-file /path/to/my/config/file
 
 ## Configuration
 
-See ``example_config.json``.
+See ``example_config.json``. The search terms which are chemical formulas should go into the ``chem_terms`` field, with spaces between elements; they will be converted to a regular expression which I've found matches well most of the time (different authors like to format TaS<sub>2</sub> like ``TaS2``, ``TaS$_2$``, ``TaS$_{2}$``, etc. and the ``chem_terms`` tries to catch all of them). Otherwise, use the ``terms`` field.
