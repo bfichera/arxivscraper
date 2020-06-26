@@ -15,4 +15,5 @@ cfg = {
     ],
     'section': 'cond-mat.*',
     'max_results': 500,
+    'timeout':120,
 }
