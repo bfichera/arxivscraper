@@ -32,13 +32,13 @@ def send_email(cfg, matches, errors):
     text = ''
     html = '<html>\n'
     html += '<body>\n'
-    for regex, ids in matches.items():
-        if ids:
+    for regex, papers in matches.items():
+        if papers:
             text += f'Matches for regex {regex}\n'
             html += f'<p>\nMatches for regex {regex}\n<ul>\n'
-            for id_ in ids:
-                text += f'    {str(id_)}\n'
-                html += f'<li><a href="{str(id_)}">{str(id_)}</a></li>\n'
+            for paper in papers:
+                text += f'    {str(paper.id)}\n'
+                html += f'<li><a href="{str(paper.id)}">{str(paper.title)}</a></li>\n'
             html += '</ul>\n</p>\n'
     text += f'There were {len(errors)} errors.\n'
     html += f'There were {len(errors)} errors.<br>\n'
@@ -157,9 +157,9 @@ def main(cfg):
             ).items():
                 if is_in:
                     if regex not in matches.keys():
-                        matches[regex] = [paper.id]
+                        matches[regex] = [paper]
                     else:
-                        matches[regex].append(paper.id)
+                        matches[regex].append(paper)
                     
         except Exception as exception:
             if isinstance(exception, TimeoutError):
