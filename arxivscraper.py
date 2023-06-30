@@ -119,9 +119,12 @@ def main(cfg):
         sort_order='descending',
         iterative=True,
     )
+    requested_date = cfg['date']
+    if requested_date is None:
+        requested_date = datetime.today()
     today_results = (
         p for p in results() 
-        if posted_today(p, datetime.today()-timedelta(days=1))
+        if posted_today(p, requested_date-timedelta(days=1))
     )
 
     matches = {}
@@ -189,9 +192,17 @@ def get_cfg():
         dest='config_file',
         required=True,
     )
+    parser.add_argument(
+        '--date',
+        type=parse,
+        dest='date',
+        required=False,
+        default=None,
+    )
     args = parser.parse_args()
 
     cfg = run_path(args.config_file)['cfg']
+    cfg['date'] = args.date
     return cfg
 
 
